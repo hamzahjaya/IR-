@@ -1,0 +1,19 @@
+https://www.mysqltutorial.org/activating-full-text-searching.aspx
+
+
+
+	
+CREATE FULLTEXT INDEX judul_publikasi
+ON t_publikasi(judul_publikasi,tagline,penjelasan)
+
+SELECT  judul_publikasi,tagline,penjelasan
+FROM t_publikasi 
+WHERE 
+    MATCH(judul_publikasi,tagline,penjelasan) 
+    AGAINST('terpilih,calon')
+
+
+$this->db->where('MATCH (judul_publikasi,tagline,penjelasan) AGAINST (' . $this->db->escape($cari). ')');
+
+
+SELECT MATCH(judul_publikasi, tagline,penjelasan) AGAINST('terpilih,calon') as Relevance, judul_publikasi, tagline, penjelasan FROM t_publikasi WHERE MATCH(judul_publikasi, tagline,penjelasan) AGAINST('terpilih,calon') LIMIT 30
